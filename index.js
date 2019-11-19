@@ -16,12 +16,23 @@ const data_json_1 = __importDefault(require("./data.json"));
 const app = express_1.default();
 app.use(body_parser_1.default.urlencoded());
 app.use(body_parser_1.default.json());
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 app.get("/products", (req, res) => {
+    if (Math.random() > 0.8) {
+        res.status(500);
+        res.send("ERROR");
+        return;
+    }
     let products = data_json_1.default.products;
     let search = req.query["search"];
     if (search) {
         products = products.filter(p => p.productName.toLocaleLowerCase().indexOf(search.toLocaleLowerCase()) !== -1);
     }
+    res.contentType("application/json");
     res.json(products);
 });
 app.get("/product/:id", (req, res) => {
@@ -39,6 +50,14 @@ app.get("/product/:id", (req, res) => {
 app.post("/product", (req, res) => {
     let products = data_json_1.default.products;
     products.push(req.body);
+    res.status(200);
+    res.end();
+});
+app.get("/product", (req, res) => {
+    let products = data_json_1.default.products;
+    products.push(req.body);
+    res.status(200);
+    res.end();
 });
 app.put("/product/:id", (req, res) => {
     let products = data_json_1.default.products;

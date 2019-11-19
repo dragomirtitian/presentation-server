@@ -5,14 +5,26 @@ import data from './data.json'
 const app = express();
 app.use(bodyParser.urlencoded())
 app.use(bodyParser.json());
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
+  
 app.get("/products", (req, res) => 
 {
+    if(Math.random() > 0.8) {
+        res.status(500);
+        res.send("ERROR");
+        return;
+    }
     let products = data.products;
     let search: string = req.query["search"];
     if(search) {
         products = products.filter(p => p.productName.toLocaleLowerCase().indexOf(search.toLocaleLowerCase()) !== -1);
     }
+    res.contentType("application/json");
     res.json(products);
 })
 
@@ -34,6 +46,16 @@ app.post("/product", (req, res) =>
 {
     let products = data.products;
     products.push(req.body);
+    res.status(200);
+    res.end();
+})
+
+app.get("/product", (req, res) => 
+{
+    let products = data.products;
+    products.push(req.body);
+    res.status(200);
+    res.end();
 })
 
 

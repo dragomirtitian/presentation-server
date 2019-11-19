@@ -1,18 +1,39 @@
 <!DOCTYPE html>
 <html>
     <header>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
     </header>
     <body>
-        <form action="http://localhost:3333/product" method="POST">
-            <label>Product Name</label><input name="productName" /> 
-            <label>Product Code</label><input name="productCode" /> 
-            <label>Release Date</label><input name="releaseDate" type="date" /> 
-            <label>Description</label><textarea name="description" > </textarea>
-            <label>Price</label><input name="price" type="number" /> 
-            <label>Stars</label><input name="starRating" type="number" /> 
-            <label>ImageUrlq</label><input name="imageUrl" /> 
-            <button type="submit">Submit</button>
-        </form>
+        <div class="card">
+            <div class="card-header">Product</div>
+            <div class="card-body">
+                <form action="http://localhost:3333/product" method="GET">
+                    <div class="form-group">
+                        <label>Product Name</label><input class="form-control" name="productName" /> 
+                    </div>
+                    <div class="form-group">
+                        <label>Product Code</label><input class="form-control" name="productCode" /> 
+                    </div>
+                    <div class="form-group">
+                        <label>Release Date</label><input class="form-control" name="releaseDate" type="date" /> 
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label><textarea class="form-control" name="description" > </textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Price</label><input class="form-control" name="price" type="number" /> 
+                    </div>
+                    <div class="form-group">
+                        <label>Stars</label><input class="form-control" name="starRating" type="number" /> 
+                    </div>
+                    <div class="form-group">
+                        <label>ImageUrl</label><input class="form-control" name="imageUrl" /> 
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
     </body>
 </html>
