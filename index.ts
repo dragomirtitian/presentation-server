@@ -8,6 +8,7 @@ app.use(bodyParser.json());
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
     next();
   });
 
@@ -58,7 +59,14 @@ app.get("/product", (req, res) =>
     res.end();
 })
 
-
+app.delete("/product/:id", (req, res) => 
+{
+    let products = data.products;
+    let id = +req.params["id"]
+    data.products = data.products.filter(p => p.productId !== id);
+    res.status(200);
+    res.end();
+});
 app.put("/product/:id", (req, res) => 
 {
     let products = data.products;

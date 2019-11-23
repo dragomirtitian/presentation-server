@@ -19,6 +19,7 @@ app.use(body_parser_1.default.json());
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
     next();
 });
 app.get("/products", (req, res) => {
@@ -56,6 +57,13 @@ app.post("/product", (req, res) => {
 app.get("/product", (req, res) => {
     let products = data_json_1.default.products;
     products.push(req.body);
+    res.status(200);
+    res.end();
+});
+app.delete("/product/:id", (req, res) => {
+    let products = data_json_1.default.products;
+    let id = +req.params["id"];
+    data_json_1.default.products = data_json_1.default.products.filter(p => p.productId !== id);
     res.status(200);
     res.end();
 });
