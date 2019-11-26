@@ -23,11 +23,11 @@ app.use(function (req, res, next) {
     next();
 });
 app.get("/products", (req, res) => {
-    if (Math.random() > 0.8) {
-        res.status(500);
-        res.send("ERROR");
-        return;
-    }
+    // if(Math.random() > 0.8) {
+    //     res.status(500);
+    //     res.send("ERROR");
+    //     return;
+    // }
     let products = data_json_1.default.products;
     let search = req.query["search"];
     if (search) {
@@ -56,6 +56,10 @@ app.post("/product", (req, res) => {
 });
 app.get("/product", (req, res) => {
     let products = data_json_1.default.products;
+    let product = req.body;
+    if (!product.productId) {
+        product.productId = 1 + products.reduce((m, p) => Math.max(p.productId, m), 0);
+    }
     products.push(req.body);
     res.status(200);
     res.end();
@@ -76,7 +80,9 @@ app.put("/product/:id", (req, res) => {
         res.send("Product not found");
     }
     else {
+        console.log(product);
         Object.assign(product, req.body);
+        console.log(req.body);
         res.json(product);
     }
 });

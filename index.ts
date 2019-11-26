@@ -54,6 +54,10 @@ app.post("/product", (req, res) =>
 app.get("/product", (req, res) => 
 {
     let products = data.products;
+    let product: typeof products[number] = req.body;
+    if(!product.productId){
+        product.productId = 1 + products.reduce((m, p) => Math.max(p.productId, m), 0);
+    }
     products.push(req.body);
     res.status(200);
     res.end();
@@ -76,7 +80,9 @@ app.put("/product/:id", (req, res) =>
         res.status(404); 
         res.send("Product not found");
     } else {
+        console.log(product)
         Object.assign(product, req.body);
+        console.log(req.body)
         res.json(product);
     }
 })
